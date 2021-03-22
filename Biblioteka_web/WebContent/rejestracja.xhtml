@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+      <ui:composition template="/template/page-template.xhtml">
+      <ui:define name="pageContent">
+      
+	<p:panel header="Rejestracja"  toggleable="true" toggleSpeed="400" style="margin: 1em auto;">
+	
+
+	<h:form id="bla" >
+	
+	<h:panelGrid id="grid" columns="3" cellpadding="5">
+		
+	
+  		
+  		<p:outputLabel for="Imie" value="Imie:"/>
+  		<p:inputText id="Imie" value="#{regBB.imie}" required="true" requiredMessage="brak imienia"/>
+  		<p:message for="Imie" />
+  		
+  		<p:outputLabel for="Nazwisko" value="Nazwisko:"/>
+  		<p:inputText id="Nazwisko" value="#{regBB.nazwisko}" required="true" requiredMessage="brak nazwiska"/>
+  		<p:message for="Nazwisko" />
+  		
+  		<p:outputLabel for="Mail" value="Mail:"/>
+  		<p:inputText id="Mail" value="#{regBB.mail}" required="true" requiredMessage="brak maila" />
+  		<p:message for="Mail" />
+  		
+  		<p:outputLabel for="Nr_telefonu" value="Numer telefonu"/>
+  		<p:inputText id="Nr_telefonu" value="#{regBB.telefon}" required="true" requiredMessage="brak numeru"/>
+  		<p:message for="Nr_telefonu" />
+  	
+  		<p:outputLabel for="Login" value="Login:"/>
+  		<p:inputText id="Login" value="#{regBB.login}" required="true" requiredMessage="brak loginu"/>
+  		<p:message for="Login" />
+  		
+  		<p:outputLabel for="Haslo" value="Haslo:"/>
+  		<p:inputText id="Haslo" value="#{regBB.haslo}" required="true" requiredMessage="brak hasła" />
+  		<p:message for="Haslo" />
+  		
+  		
+		<p:commandButton value="Zarejestruj" action="#{regBB.rejestacja()}" update="@form"/>
+		
+		
+		</h:panelGrid>
+			
+		
+	</h:form>
+	<h:form id="bla1" >
+	<h:panelGrid id="grid" columns="3" cellpadding="5">
+	<p:commandButton value="Posiadam już konto" action="#{regBB.powrot()}" update="@form" />
+	</h:panelGrid>
+	</h:form>
+	</p:panel>
+</ui:define>
+
+</ui:composition>	
+</html>

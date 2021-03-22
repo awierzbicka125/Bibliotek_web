@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/template/page-template.xhtml">
+
+	<ui:define name="pageContent">
+
+
+
+	<p:panel header="Logowanie konta"  toggleable="true" toggleSpeed="400" style="margin: 1em auto;">
+	
+<h:form>
+	
+	<h:panelGrid id="grid" columns="3" cellpadding="5">
+	
+	<p:outputLabel for="lista_rezerwacji" value="Lista rezerwacji:"/>
+	
+    <div class="card">
+        <p:dataTable var="product" value="#{dtBasicView.products}">
+        
+            <p:column headerText="Tytul">
+                <h:outputText value="#{product.code}" />
+            </p:column>
+
+            <p:column headerText="Kategoria">
+                <h:outputText value="#{product.name}" />
+            </p:column>
+
+            <p:column headerText="Data rezerwacji">
+                <h:outputText value="#{product.category}" />
+            </p:column>
+
+            <p:column headerText="Anulowanie rezerwacji">
+                <h:outputText value="#{product.quantity}" />
+            </p:column>
+        </p:dataTable>
+    </div>
+
+	
+		
+		
+  		
+  		
+  		
+  		
+		<p:commandButton value="Zaloguj" action="#{BiblBB.zaloguj()}" update="@form"/>
+		<p:commandButton value="Utwórz nowe konto" action="#{BiblBB.rejestracja()}" update="@form" />
+		
+	</h:panelGrid>
+		
+		</h:form>
+
+	
+	</p:panel>
+
+</ui:define>
+
+</ui:composition>
+
+</html>
