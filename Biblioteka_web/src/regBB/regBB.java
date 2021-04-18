@@ -3,18 +3,29 @@ package regBB;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.jsf.entities.Person;
+
+import biblioteka.dao.UzytkownikDAO;
+import biblioteka_entities.Uzytkownik;
+
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 
 @Named
 @RequestScoped
 //@SessionScoped
 public class regBB {
+	private static final String PAGE_PERSON_LIST = "";
+	private static final String PAGE_STAY_AT_THE_SAME = null;
+
 	private String Login;
 	private String Haslo;
 	private String Mail;
@@ -22,8 +33,7 @@ public class regBB {
 	private String Nazwisko;
 	private String Telefon;
 	
-	@Inject
-	FacesContext ctx;
+
 
 	public String getLogin() {
 		return Login;
@@ -77,7 +87,65 @@ public class regBB {
 	public String powrot(){
 		return "login";
 	}
-		
-	
+	private Uzytkownik uzytkownik = new Uzytkownik();
+	private Uzytkownik loaded = null;
 
+	@EJB
+	UzytkownikDAO UzytkownikDAO;
+
+	@Inject
+	FacesContext context;
+
+	@Inject
+	Flash flash;
+
+	public Uzytkownik getUzytkownik() {
+		return uzytkownik;
+	}
+
+	public void onLoad() throws IOException {
+		// 1. load person passed through session
+		// HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+		// loaded = (Person) session.getAttribute("person");
+
+		// 2. load person passed through flash
+		loaded = (Uzytkownik) flash.get("uzytkownik");
+
+		// cleaning: attribute received => delete it from session
+		if (loaded != null) {
+			uzytkownik = loaded;
+			// session.removeAttribute("person");
+		} else {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błędne użycie systemu", null));
+			// if (!context.isPostback()) { //possible redirect
+			// context.getExternalContext().redirect("personList.xhtml");
+			// context.responseComplete();
+			// }
+		}
+
+	}
+	
+	public String saveData() {
+		// no Person object passed
+		if (loaded == null) {
+			return PAGE_STAY_AT_THE_SAME;
+		}
+
+		try {
+			if (uzytkownik.getID_uzytkownik() == null) {
+				// new record
+				UzytkownikDAO.create(uzytkownik);
+			} else {
+				// existing record
+				UzytkownikDAO.merge(uzytkownik);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			context.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "blad zapisu", null));
+			return PAGE_STAY_AT_THE_SAME;
+		}
+
+		return PAGE_PERSON_LIST;
+	}
 }
