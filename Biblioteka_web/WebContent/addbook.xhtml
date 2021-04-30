@@ -6,41 +6,66 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<ui:composition template="/template/page-template.xhtml">
+<f:metadata>
+	<f:viewParam name="k" value="#{bookEditBB.ksiazka.ID_ksiazka}"
+		converterMessage="Nieoczekiwany błąd"/>
+	<f:event type="preRenderView" listener="#{bookEditBB.onLoad()}" />
+</f:metadata>
+	
 
-	<ui:define name="pageContent">
+
+<h:head>
+	<title>Edytuj książkę</title>
+</h:head>
+
+<h:body style="background-color: #eee; margin: 0.5em;">
+
+
 
 
 
 	<p:panel header="Konto"  toggleable="true" toggleSpeed="400" style="margin: 1em auto;">
 	
 
-		<h:form id="bla" >
-		<p:commandButton value="Wyloguj" action="#{bookBB.powrot()}" update="@form"/>
-		</h:form>
-		
-		<h:form id="bla1" >
-	<h:panelGrid id="grid" columns="3" cellpadding="5">
-	
-		
-		<p:outputLabel for="login" value="login:"/>
-  		<p:inputText id="login" value="#{loginBB.login}" />
-  		<p:message for="login" />
-  		
-  		<p:outputLabel for="haslo" value="haslo:"/>
-  		<p:inputText id="haslo" value="#{loginBB.haslo}" />
-  		<p:message for="haslo" />
-  		
-  		
-		
-	</h:panelGrid>
-		
-		
-	</h:form>
+		<h:form rendered="#{bookEditBB.ksiazka != null}">
+        	<p:panelGrid columns="2" >
+                
+             	<h:outputText value="Tytuł:" />
+                <p:inputText id="k-tytul" value="#{bookEditBB.ksiazka.tytul}" required="true" requiredMessage="is required"/>
+                   	
+		  		<h:outputText value="Autor: " />
+                <p:inputText id="k-autor" value="#{bookEditBB.ksiazka.autor}" required="true" requiredMessage="is required" /> 
+                
+               
+                 <h:outputLabel for="k-rok_wydania" value="data ur.:" />
+				<p:inputText id="k-rok_wydania" value="#{bookEditBB.ksiazka.rok_wydania}"
+					required="true" requiredMessage="podaj datę urodzenia"
+					converterMessage="niepoprawny format daty (np. 2018-07-15)">
+					<f:convertDateTime pattern="yyyy-MM-dd"/>
+			    </p:inputText>
+			
+				
+				
+              
+                    
+           	</p:panelGrid>
+           	<p:messages id="msgs" />
+                
+            <h:panelGrid columns="2">
+                
+            	<p:commandButton value="Dodaj" action="#{bookEditBB.saveData()}" update="@form" />
+            	
+                <p:button value="Anuluj" outcome="personList" />
+                
+            </h:panelGrid>
+            
+                 	
+         </h:form>
 	</p:panel>
 
-</ui:define>
+	
 
-</ui:composition>
+</h:body>
+
 
 </html>

@@ -7,6 +7,7 @@ import javax.inject.Named;
 import biblioteka.dao.KsiazkaDAO;
 import biblioteka_entities.Ksiazka;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,16 +22,22 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 
+
 @Named
 @RequestScoped
 //@SessionScoped
 public class bookBB {
 	
 
-	private static final String PAGE_BOOK_EDIT = "personEdit?faces-redirect=true";
+	private static final String PAGE_BOOK_EDIT = "addbook";
 	private static final String PAGE_STAY_AT_THE_SAME = null;
 
 	private String tytul;
+	private String name;
+	private Ksiazka ksiazka = new Ksiazka();
+	private Ksiazka loaded = null;
+
+	
 		
 	@Inject
 	ExternalContext extcontext;
@@ -41,11 +48,11 @@ public class bookBB {
 	@EJB
 	KsiazkaDAO ksiazkaDAO;
 		
-	public String getSurname() {
+	public String getTytul() {
 		return tytul;
 	}
 
-	public void setSurname(String tytul) {
+	public void setTytul(String tytul) {
 		this.tytul = tytul;
 	}
 
@@ -59,12 +66,12 @@ public class bookBB {
 		//1. Prepare search params
 		Map<String,Object> searchParams = new HashMap<String, Object>();
 		
-		if (tytul != null && tytul.length() > 0){
+		if (tytul!= null && tytul.length() > 0){
 			searchParams.put("tytul", tytul);
 		}
 		
 		//2. Get list
-		list =ksiazkaDAO.getList(searchParams);
+		list = ksiazkaDAO.getList(searchParams);
 		
 		return list;
 	}
@@ -72,28 +79,19 @@ public class bookBB {
 	public String newKsiazka(){
 		Ksiazka ksiazka = new Ksiazka();
 		
-		//1. Pass object through session
-		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("person", person);
-		
-		//2. Pass object through flash	
 		flash.put("ksiazka", ksiazka);
 		
 		return PAGE_BOOK_EDIT;
 	}
 
-	public String editPerson(Ksiazka ksiazka){
-		//1. Pass object through session
-		//HttpSession session = (HttpSession) extcontext.getSession(true);
-		//session.setAttribute("person", person);
+	public String editKsiazka(Ksiazka ksiazka){
 		
-		//2. Pass object through flash 
 		flash.put("ksiazka", ksiazka);
 		
 		return PAGE_BOOK_EDIT;
 	}
 
-	public String deletePerson(Ksiazka ksiazka){
+	public String deleteKsiazka(Ksiazka ksiazka){
 		ksiazkaDAO.remove(ksiazka);
 		return PAGE_STAY_AT_THE_SAME;
 	}

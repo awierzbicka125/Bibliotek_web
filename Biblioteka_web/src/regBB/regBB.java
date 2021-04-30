@@ -3,7 +3,7 @@ package regBB;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.jsf.entities.Person;
+
 
 import biblioteka.dao.UzytkownikDAO;
 import biblioteka_entities.Uzytkownik;
@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -33,7 +32,7 @@ public class regBB {
 	private String Nazwisko;
 	private String Telefon;
 	
-
+	
 
 	public String getLogin() {
 		return Login;

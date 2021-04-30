@@ -8,53 +8,53 @@
 
 <h:head>
 	<meta charset="utf-8"/>
-	<title>Strona główna dzień dobry witam</title>
+	<title>Witamy! Zaloguj się!</title>
 </h:head>
 <h:body style="background-color: #eee; margin: 0.5em;">
 
 
 	<h:form id="form-table" style="margin-bottom:1em;">
 
-		<p:commandButton value="Dodaj nową osobę"
-			action="#{bookBB.newKsiazka()}" style="margin-bottom:1em;"/>
+		
 
-		<p:dataTable value="#{booktBB.list}" var="p">
+		<p:dataTable value="#{bookBB.list}" var="k">
 
 			<p:column priority="5">
 				<f:facet name="header">
-					<h:outputText value="imię" />
+					<h:outputText value="Tytuł" />
 				</f:facet>
-				<h:outputText value="#{p.tytul}" />
+				<h:outputText value="#{k.tytul}" />
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">
-					<h:outputText value="nazwisko" />
+					<h:outputText value="Autor" />
 				</f:facet>
-				<h:outputText value="#{p.autor}" />
+				<h:outputText value="#{k.autor}" />
 			</p:column>
 
 			<p:column priority="4">
 				<f:facet name="header">
-					<h:outputText value="data ur." />
+					<h:outputText value="Data wydania" />
 				</f:facet>
-				<h:outputText value="#{p.rok_wydania}">
+				<h:outputText value="#{k.rok_wydania}">
 					<f:convertDateTime pattern="dd-MM-yyyy" />
 				</h:outputText>
 			</p:column>
-
-			<p:column>
+<p:column>
 				<f:facet name="header">
 					<h:outputText value="opcje" />
 				</f:facet>
 
-				<p:commandButton value="Edytuj" />
-
 				<p:commandButton value="Usuń"
-					action="#{bookBB.deletePerson(p)}" update="@form" />
+					action="#{bookBB.deleteKsiazka(k)}" update="@form" />
 
-			
+					
+					<p:button outcome="addbook" value="Edytuj">
+					<f:param name="k" value="#{k.ID_ksiazka}" />
+				</p:button>
 			</p:column>
+		
 
 		</p:dataTable>
 	</h:form>
